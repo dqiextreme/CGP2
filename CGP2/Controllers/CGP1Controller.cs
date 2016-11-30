@@ -36,6 +36,8 @@ namespace CGP2.Controllers
         //public PartialViewResult IndexDetalle(Pedido model)
         public void IndexDetalle(Pedido model)
         {
+            bool btnadd = true;
+            bool btndel = false;
             //if (Session["strDescUsuario"] == null)
             //{
             //    return PartialView("SesionExpirada");
@@ -61,14 +63,15 @@ namespace CGP2.Controllers
                     x.DirecDespDesc,
                     x.DirecDespID == intDireccDespIDCheckeada)));
             CargarDirecciones(model, pTuplaList);
-            var strNombreBtnEliminarPresionado = ""; // NombreBtnEliminarPresionado();
+            //--------------------------------------------------------------------------------------------------
+            //var strNombreBtnEliminarPresionado = ""; // NombreBtnEliminarPresionado();
             //if (ModelState.IsValid && !string.IsNullOrEmpty(Request["btnAgregarProducto"]))
-            if (!string.IsNullOrEmpty(strNombreBtnEliminarPresionado))
+            if (btndel)
             {
                 AgregarProducto(model);
             }
             //else if (!string.IsNullOrEmpty(Request[strNombreBtnEliminarPresionado]))
-            else if (!string.IsNullOrEmpty(strNombreBtnEliminarPresionado))
+            else if (btndel)
             {
                 //var productoLits = new List<Producto>();
                 //productoLits.AddRange(model.Productos);
@@ -79,6 +82,7 @@ namespace CGP2.Controllers
                     AgregarProducto(model);
                 }
             }
+            //--------------------------------------------------------------------------------------------------
             //else if ((ModelState.IsValid))
             else if (true)
             {

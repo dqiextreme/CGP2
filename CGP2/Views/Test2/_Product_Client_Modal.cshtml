@@ -20,18 +20,22 @@
 }
 @*<div id="dial" class="modal-dialog">*@
 @*style="max-height: 240px ;overflow-y: scroll; display: none;"*@
-<div id="dial" style="width:90%; max-height: 90%; overflow-y: scroll;" class="modal-dialog">
+@*<div id="dial" style="width:90%; max-height: 90%; overflow-y: scroll;" class="modal-dialog">*@
+<div id="dial" style="width:90%; max-height: 90%;" class="modal-dialog">
     
 <div class="modal-content" style="text-align:center;">
-    <div class="modal-header pagination pagination-sm">@*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
-        <h4 class="modal-title">Client</h4>
+    <div class="modal-header-xs">
+        <div class="pagination pagination-xs">
+            <h4 class="modal-title">Client</h4>
         
-        @for (int i = 1; i < ((Lista.Count / 10) + 1); i++)
-        {
-            <li><a onclick="pag(@i)">@i</a></li>
-        }
-
-    </div><div class="modal-body">
+            @for (int i = 1; i < ((Lista.Count / 10) + 1); i++)
+            {
+                <li><a onclick="pag(@i)">@i</a></li>
+            }
+        </div>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
 
 <!----table------------------------------------------------------------------------------------->
 <div class="table-responsive">
@@ -53,10 +57,10 @@
     <tbody id="tbl_body">
         @foreach (var p in JList.Take(10).ToList())
         {
-            <tr style="text-align:justify;" id="@p.cproducto.ToString()">
+            <tr style="text-align:justify;" id="@p.cproducto.ToString().Trim()">
               <td>
                   @*<button type="button" class="btn btn-info btn-sm" onclick="add_m_list('@p.ccompany', '@p.cvendedor', '@p.cproducto', '@p.cnamefc', '@p.ccostobruto_u1', '@p.cprecioventamax', '@p.c_nomb_comer', '@p.cname'); javascript:document.getElementById('tbl_body').deleteRow(this); " > *@
-                  <button type="button" class="btn btn-info btn-sm" onclick="add_m_list('@p.ccompany', '@p.cvendedor', '@p.cproducto', '@p.cnamefc', '@p.ccostobruto_u1', '@p.cprecioventamax', '@p.c_nomb_comer', '@p.cname')" > 
+                  <button id="@string.Concat("btn",@p.cproducto.ToString())" type="button" class="btn-xs btn-info btn-sm" onclick="add_m_list('@p.ccompany', '@p.cvendedor', '@p.cproducto', '@p.cnamefc', '@p.ccostobruto_u1', '@p.cprecioventamax', '@p.c_nomb_comer', '@p.cname')" > 
                       @p.cproducto.ToString() </button>
                       @*<button type="button" class="btn btn-info btn-sm" onclick="javascript:document.getElementById('tbl_body').deleteRow(this);" > @p.cproducto.ToString() </button>*@
               </td>
@@ -78,37 +82,34 @@
 </div>
 <!----table------------------------------------------------------------------------------------->        
 
-</div><div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div>
+</div>
+    
+    @*<div class="modal-footer">
+        <button type="button" class="btn-xs btn-default" data-dismiss="modal">Close</button>
+    </div>*@
+</div>
 <script>
+    function Ver3()
+    {
+        $("#tbl_body").find('tr').each(function () {
+            var rev = $(this).find('td').eq(3).text().trim();
+            
+            if ($.inArray(rev,a1) != -1){
+                $("#tbl_body > #" + rev).find('td').eq(0).replaceWith("<td>" + rev + "</td>");
+            }
+        });
+            
+
+    }
+
+
     var a1 = [];
     function Ver2(cproducto) {
         if ($.inArray(cproducto, a1) == -1) {
             a1.push(cproducto);
+            $("#tbl_body > #" + cproducto).find('td').eq(0).replaceWith("<td>" + cproducto + "</td>");
             return true;
-        }else{ alert(cproducto);
-        $("#" + cproducto).find('td').eq(3).css("background-color", "#b3b3b3");
-
-        //$("#linea2").find('tr').each(function (a) {
-        //    var a2 = $(this).find('td').eq(0).text();
-        //    if ($.inArray(a2, a1) == -1) {
-        //        a1.push(a2);
-        //    } else {
-        //        $(this).remove();
-        //    }
-        //});
-        
-            
-        return false; }
-
-        //$("#linea2").find('tr').each(function (a) {
-        //    var a2 = $(this).find('td').eq(0).text();
-        //    if ($.inArray(a2, a1) == -1) {
-        //        a1.push(a2);
-        //    } else {
-        //        $(this).remove();
-        //    }
-        //});
+        }else{ return false; }
     }
 
     function add_m_list(ccompany, cvendedor, cproducto, cnamefc, ccostobruto_u1, cprecioventamax, c_nomb_comer, cname) {
@@ -137,8 +138,8 @@ function pag(pos) {
     var result = @Html.Raw(JResult);
     var prin = "";
     for (var i = sk; i < ta; i++) {
-            prin += '<tr style="text-align:justify;">' +
-            '<td><button type="button" class="btn btn-info btn-sm" onclick="add_m_list(\'' + 
+            prin += '<tr style="text-align:justify;" id="' + result[i]['cproducto'] + '">' +
+            '<td><button id="btn' + result[i]['cproducto'] + '" type="button" class="btn-xs btn-info btn-sm" onclick="add_m_list(\'' + 
             result[i]['ccompany'] + '\', \'' +
             result[i]['cvendedor'] + '\', \'' +
             result[i]['cproducto'] + '\', \'' +
@@ -158,6 +159,7 @@ function pag(pos) {
                         '<td>' + result[i]['cname'] + '</td></tr>';
     }
     $("#tbl_body tr").remove().ready($("#tbl_body").append(prin));
+    Ver3();
 } 
 </script>
 
