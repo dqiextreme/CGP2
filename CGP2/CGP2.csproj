@@ -129,6 +129,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Clase\CGP_Class.cs" />
+    <Compile Include="Clase\Prod_Desc_Json.cs" />
     <Compile Include="Clase\Token.cs" />
     <Compile Include="Controllers\CGP1Controller.cs" />
     <Compile Include="Controllers\Test2Controller.cs" />
@@ -637,11 +638,13 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Test2\Index.cshtml" />
+    <Content Include="Views\Test2\Index2.cshtml" />
     <Content Include="Views\Test2\_Product_Client_List.cshtml" />
     <Content Include="Views\Test2\_Product_Client_List2.cshtml" />
     <Content Include="Views\Test2\_Product_Client_List3.cshtml" />
     <Content Include="Views\Test2\_Product_Client_Modal.cshtml" />
+    <Content Include="Views\Test2\Index.cshtml" />
+    <Content Include="Views\Test2\_Product_Client_Modal2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

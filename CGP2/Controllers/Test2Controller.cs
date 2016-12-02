@@ -7,6 +7,7 @@ using CGP2.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft;
+using CGP2.Clase;
 
 
 namespace CGP2.Controllers
@@ -43,12 +44,46 @@ namespace CGP2.Controllers
             return PartialView();
         }
 
+        Prod_Desc_Json pdj = new Prod_Desc_Json();
         public ActionResult _Product_Client_Modal()
         {
-            List<VST_T3_PRODUCTO_DESCARGA> res = _oModelos.VST_T3_PRODUCTO_DESCARGA.Where(x => x.ccompany == "S01" && x.cvendedor == "S01_108").ToList();
+            pdj.test2();
+
+            //List<VST_T3_PRODUCTO_DESCARGA> res = _oModelos.VST_T3_PRODUCTO_DESCARGA.Where(x => x.ccompany == "S01" && x.cvendedor == "S01_108").ToList();
+            var res = _oModelos.VST_T3_PRODUCTO_DESCARGA.Where(x => x.ccompany == "S01" && x.cvendedor == "S01_108").ToList().Select(x => new VST_T3_PRODUCTO_DESCARGA {
+                ccompany = x.ccompany, cproducto = x.cproducto
+            }).ToList();
+
+
             ViewBag.List = res;
             return PartialView();
         }
+
+        public static List<VST_T3_PRODUCTO_DESCARGA> res1 = new List<VST_T3_PRODUCTO_DESCARGA>(); 
+        public void load1()
+        {
+            res1 = _oModelos.VST_T3_PRODUCTO_DESCARGA.Where(x => x.ccompany == "S01" && x.cvendedor == "S01_108").ToList();
+        }
+
+        public JsonResult _Product_t1() 
+        {
+            var mod1 = res1.GroupBy(x => x.cproducto).Select(y => new { id = y.Key, values = y.ToList() }).ToList();
+            
+            List<Prod_Desc_Json.prod_desc3> res_json = new List<Prod_Desc_Json.prod_desc3>();
+            mod1.ForEach(x =>
+            {
+                var a = x.id;
+                var b = x.values.ToList();
+                res_json.Add(new Prod_Desc_Json.prod_desc3 { ProductoC = a.ToString(), res = b });
+
+            });
+            //res_json.Add(res.GroupBy(x => x.cproducto).Select(y => new Prod_Desc_Json.prod_desc2 { ProductoC = y.Key.ToString(), res = y.ToList() }).ToList());
+            var ad1 = Json(res_json);
+            var ad2 = JObject.FromObject(ad1);
+            var ad3 = ad2["Data"].ToString();
+            return ad1;
+        }
+
 
         public void testjson(string js)
         {

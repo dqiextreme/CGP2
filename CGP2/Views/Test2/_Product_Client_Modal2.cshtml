@@ -91,11 +91,11 @@
 <script>
     function Ver3(){
         $("#tbl_body").find('tr').each(function () {
-            var codp = $(this).find('td').eq(3).text().trim();
-            if ($.inArray(codp,a1) != -1){
-                $("#tbl_body > #" + codp).find('td').eq(0).replaceWith("<td>" + codp + "</td>");
+            if ($.inArray($(this).find('td').eq(3).text().trim(),a1) != -1){
+                $("#tbl_body > #" + rev).find('td').eq(0).replaceWith("<td>" + rev + "</td>");
             }});
     }
+
 
     var a1 = [];
     function Ver2(cproducto) {
@@ -106,31 +106,20 @@
         }else{ return false; }
     }
 
-    function aon()
-    {
-        alert();
-    }
-
     function add_m_list(ccompany, cvendedor, cproducto, cnamefc, ccostobruto_u1, cprecioventamax, c_nomb_comer, cname) {
         if (Ver2(cproducto)) {
-            "<th></th><th>Producto</th><th>Descripción</th><th>PMV</th><th>Cajas</th><th>Unidad</th><th>DescFijo</th><th>Desc2</th><th>Desc3</th>"
-            $("#linea2").append("<tr id=\"" + cproducto +"\">"+
-                            "<td>" +
-                            "<a class=\"glyphicon glyphicon-ban-circle\" onclick=\"Rem2("+ cproducto +")\"></a> - " + 
-                            "<a class=\"glyphicon glyphicon-remove\" onclick=\"Rem2("+ cproducto +")\"></a>" + 
-                            "</td>" +
-                            //"<td><span class=\"glyphicon glyphicon-ban-circle\"></span></td>" +
-                            //"<td><span onclick=\"aon()\" class=\"btn badge glyphicon glyphicon-ban-circle\"> </span></td>" +
-                            "<td>" + cproducto + "</td>" +
-                            "<td>" + cnamefc + "</td>" +
-                            "<td>" + cprecioventamax + "</td>" +
-                            "<td><input class=\"col-sm-12\" id=\"" + cproducto + "_cajas" + "\" /></td>" +
-                            "<td><input class=\"col-sm-12\" id=\"" + cproducto + "_unidad" + "\" /></td>" +
-                            "<td><input class=\"col-sm-12\" id=\"" + cproducto + "_descfijo" + "\" /></td>" +
-                            "<td><input class=\"col-sm-12\" id=\"" + cproducto + "_desc2" + "\" /></td>" +
-                            "<td><input class=\"col-sm-12\" value=\"test\" id=\"" + cproducto + "_desc3" + "\" /></td>" +
-                            "</tr>");
-                            
+            $("#linea2").append("<tr id=\"" + cproducto +"\"><td>" + cproducto + "</th>" +
+                            "<td>" + ccompany + "</th>" +
+                            "<td>" + cvendedor + "</th>" +
+                            "<td>" + cproducto + "</th>" +
+                            "<td>" + cnamefc + "</th>" +
+                            "<td>" + ccostobruto_u1 + "</th>" +
+                            "<td>" + cprecioventamax + "</th>" +
+                            //"<td><input class=\"col-sm-12\" id=\"" + cproducto + "_c_nomb" + "\" /></td>" +
+                            //"<td><input class=\"col-sm-12\" id=\"" + cproducto + "_cname" + "\" /></td></tr>");
+            //"<td><input class=\"form-control col-sm-12\" id=\"" + cproducto + "_cname" + "\"/></td></tr>");
+            "<td>" + c_nomb_comer + "</th>" +
+            "<td></td></tr>");
             //"<td>" + cname + "</td></tr>");
         }
 }
